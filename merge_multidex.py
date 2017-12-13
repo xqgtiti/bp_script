@@ -63,8 +63,9 @@ def unzip(file_path, save_path):
     error, out = unzip.communicate()
     return unzip.returncode
 
+
 def test(apk_name):
-    return_code = unzip(PROGUARD_WORK_SPACE_WIN+apk_name,PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name)
+    return_code = unzip(PROGUARD_WORK_SPACE_WIN+apk_name,PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'/apk_uncompress')
 
     if int(return_code) != 0:
         #解压失败，记录到日志
@@ -74,7 +75,7 @@ def test(apk_name):
         f_fail.close()
         return
 
-    apk_uncompress_path = PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name
+    apk_uncompress_path = PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'/apk_uncompress'
     list = os.listdir(apk_uncompress_path) #列出文件夹下所有的目录与文件
     print list
     class_dex_cnt = 0
@@ -83,6 +84,13 @@ def test(apk_name):
             class_dex_cnt = class_dex_cnt + 1
     print class_dex_cnt
 
+    if class_dex_cnt == 1:
+        one_dex()
+    else:
+        gd = 1
+
+def one_dex(apk_name):
+    a = 1
 if __name__ == '__main__':
     import subprocess
     test('com.jonathanrobins.pepe_snap.apk')
