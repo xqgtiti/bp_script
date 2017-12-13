@@ -10,6 +10,7 @@ from global_path import *
 from command import *
 from dex_process.single_dex import *
 from dex_process.multi_dex import *
+from androguard.core.bytecodes import apk
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -58,7 +59,7 @@ def test(apk_name):
         #uncompress fail
         f_fail = open(PROGUARD_WORK_SPACE_WIN+'fail_log//'+apk_name+'.txt','w')
         now = datetime.datetime.now()
-        f_fail.write(now.strftime('%Y-%m-%d %H:%M:%S')+'\n'+apk_name+'\n'+'Uncompress Fail'+'\n')
+        f_fail.write(now.strftime('%Y-%m-%d %H:%M:%S')+'\n'+apk_name+'\n'+'Uncompress APK Fail'+'\n')
         f_fail.close()
         return
 

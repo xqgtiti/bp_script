@@ -11,6 +11,3 @@ from androguard.core.bytecodes import apk
 if __name__ == '__main__':
     a = apk.APK('C:\Users//xqg//Desktop\single_class//google_play//com.jonathanrobins.pepe_snap.apk')
     print a.get_main_activity()
-  #  all_activities =  a.get_activities()
-  #  for i in all_activities:
-  #      print i
