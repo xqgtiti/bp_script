@@ -59,3 +59,44 @@ def rm(file_name):
                                     shell=True)
     rm_sub.wait()
     error, out = rm_sub.communicate()
+
+def z7_dele(apk_name, file_name):
+    comand_line = '7z d "%s" "%s"'%(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//'+apk_name, file_name)
+    #print comand_line
+    z7_dele_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    z7_dele_sub.wait()
+    error, out = z7_dele_sub.communicate()
+    #print error
+    #print out
+    return z7_dele_sub.returncode
+
+def z7_add(apk_name, file_name):
+    #新的dex目录 /new/classes*.dex
+    comand_line = '7z u "%s" "%s"'%(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//'+apk_name, PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//new_dex//'+file_name)
+    #print comand_line
+    z7_add_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    z7_add_sub.wait()
+    error, out = z7_add_sub.communicate()
+    #print error
+    #print out
+    return z7_add_sub.returncode
+
+def jarsign(apk_name, key_name, key_pass):
+    #对apk进行签名
+    comand_line = 'jarsigner -verbose -keystore "%s" -storepass %s "%s" "%s"'\
+                  %(PROGUARD_WORK_SPACE_WIN+key_name,
+                    key_pass,
+                    PROGUARD_WORK_SPACE_WIN + 'dir_' + apk_name + '//' + apk_name,
+                    key_name)
+    os.system(comand_line)
+
+    """
+    print comand_line
+    jarsign_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    jarsign_sub.wait()
+    error, out = jarsign_sub.communicate()
+    print error
+    print out
+    print jarsign_sub.returncode
+    return jarsign_sub.returncode
+    """
