@@ -4,10 +4,12 @@ import time
 import logging
 import logging.handlers
 
-PROGUARD_WORK_SPACE_WIN = 'F:\PROGUARD_WORK_SPACE\TOTAL_APK_ROOT_GOOGLE\\'
+PROGUARD_WORK_SPACE_WIN = 'G:\PROGUARD_WORK_SPACE\TOTAL_APK_ROOT_GOOGLE\\'
 KEY_NAME = 'demo.keystore'
 KEY_PASS = 'zhuzhu66'
-LOG_FILE = 'F:\PROGUARD_WORK_SPACE\TOTAL_APK_ROOT_GOOGLE//run_log//%s.txt'%time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
+PROGUARD_LIB_PATH = 'D:\workspace//big_program//tool\proguard5.3.3\lib\proguard.jar'
+
+LOG_FILE = 'G:\PROGUARD_WORK_SPACE\TOTAL_APK_ROOT_GOOGLE//run_log//%s.txt'%time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
 handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1024 * 1024, backupCount=5)
 fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
 

@@ -74,8 +74,12 @@ def test(apk_name):
 
     if class_dex_cnt == 1:
         single_dex(apk_name)
+        single_repack(apk_name)
     else:
-        gd = 1
+        #gd = 1
+        multi_dex(apk_name, class_dex_cnt)
+        multi_repack(apk_name, class_dex_cnt)
+
 
 if __name__ == '__main__':
     test('com.jonathanrobins.pepe_snap.apk')

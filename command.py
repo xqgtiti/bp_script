@@ -26,17 +26,17 @@ def uncompress(file_path, save_path):
     error, out = uncompress.communicate()
     return uncompress.returncode
 
-def dex2jar(apk_name, nu):
+def dex2jar(apk_name, num):
     os.chdir(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name)
-    comand_line = 'd2j-dex2jar.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//apk_uncompress//classes%s.dex"'%nu
+    comand_line = 'd2j-dex2jar.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//apk_uncompress//classes%s.dex"'%num
     print comand_line
     dex2jar_subp =  subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     dex2jar_subp.wait()
     error, out = dex2jar_subp.communicate()
     return out
 
-def jar2dex(apk_name, nu):
-    comand_line = 'd2j-jar2dex.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//classes%s-dex2jar.jar"'%nu
+def jar2dex(apk_name, file_name):
+    comand_line = 'd2j-jar2dex.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//'+file_name+'"'
     print comand_line
     jar2dex_subp =  subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     jar2dex_subp.wait()
