@@ -29,23 +29,31 @@ def uncompress(file_path, save_path):
 def dex2jar(apk_name, num):
     os.chdir(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name)
     comand_line = 'd2j-dex2jar.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//apk_uncompress//classes%s.dex"'%num
+    res_code = os.system(comand_line)
+    print res_code
+    return res_code
+    """
     print comand_line
     dex2jar_subp =  subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     dex2jar_subp.wait()
     error, out = dex2jar_subp.communicate()
-    return out
+    return out"""
+
 
 def jar2dex(apk_name, file_name):
+    os.chdir(PROGUARD_WORK_SPACE_WIN + 'dir_' + apk_name)
     comand_line = 'd2j-jar2dex.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//'+file_name+'"'
     print comand_line
     jar2dex_subp =  subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     jar2dex_subp.wait()
     error, out = jar2dex_subp.communicate()
-    #print out
+    print out
     return out
 
-def enjarify(apk_name, nu):
-    comand_line = 'enjarify.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//apk_uncompress//classxces%s.dex"'%nu
+
+def enjarify(apk_name,num):
+    os.chdir(PROGUARD_WORK_SPACE_WIN + 'dir_' + apk_name)
+    comand_line = 'enjarify.bat "'+ PROGUARD_WORK_SPACE_WIN + 'dir_'+apk_name+'//apk_uncompress//classes%s.dex"'%num
     print comand_line
     enjarify_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     enjarify_sub.wait()
@@ -54,7 +62,6 @@ def enjarify(apk_name, nu):
 
 def rm(file_name):
     comand_line = 'del '+file_name
-    print comand_line
     rm_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     shell=True)
     rm_sub.wait()
@@ -73,7 +80,6 @@ def z7_dele(apk_name, file_name):
 def z7_add(apk_name, file_name):
     #新的dex目录 /new/classes*.dex
     comand_line = '7z u "%s" "%s"'%(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//'+apk_name, PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//new_dex//'+file_name)
-    #print comand_line
     z7_add_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     z7_add_sub.wait()
     error, out = z7_add_sub.communicate()
@@ -100,3 +106,13 @@ def jarsign(apk_name, key_name, key_pass):
     print jarsign_sub.returncode
     return jarsign_sub.returncode
     """
+
+def jar(jar_name,dir_name, apk_name):
+    comand_line = 'jar cvf %s -C %s .'%(jar_name, dir_name)
+    print comand_line
+    return_code = os.system(comand_line)
+    comand_line = '7z d "%s" "%s"' % (PROGUARD_WORK_SPACE_WIN + 'dir_' + apk_name + '//' + 'classes_merge.jar', 'META-INF')
+    os.system(comand_line)
+    return return_code
+
+

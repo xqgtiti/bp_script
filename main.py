@@ -12,48 +12,13 @@ from dex_process.single_dex import *
 from dex_process.multi_dex import *
 from androguard.core.bytecodes import apk
 
+import pypinyin
+from pypinyin import lazy_pinyin
+from pypinyin import pinyin
 reload(sys)
-sys.setdefaultencoding('utf-8')
-def slove_windows():
+sys.setdefaultencoding('gbk')
 
-    ROOT_PATH = 'C://Users//xqg//Desktop//mutildex'
-   # root_path = 'C://Users//xqg//Desktop//mutildex'
-    list = os.listdir(root_path)
-
-    f_out = open(root_path + '//map_out.txt', 'w')  # 映射文件
-    merge_dir_path_root = 'C://Users//xqg//Desktop//mutildex//classes_merge//'
-    if os.path.exists(merge_dir_path_root) == False:
-        os.makedirs(merge_dir_path_root)
-    for i in range(0, len(list)):
-        path = os.path.join(root_path, list[i])
-
-        if os.path.isdir(path) == True and '-dex2jar' in path:
-            print path
-            print len(path)
-            xh = path[-9:-8]
-            for root, dirs, files in os.walk(path, 'rb'):
-                for dir in dirs:
-                    dirPath = str(os.path.join(root, dir))
-                    dir_inside = str(os.path.join(root[len(path) + 1:], dir))
-                    merge_dir_path = merge_dir_path_root + dir_inside
-                    if os.path.exists(merge_dir_path) == False:
-                        print 'make dir:' + merge_dir_path
-                        os.makedirs(merge_dir_path)
-
-                for file in files:
-                    filePath = str(os.path.join(root, file))
-                    file_inside = str(os.path.join(root[len(path) + 1:], file))
-                    merge_file_path = merge_dir_path_root + file_inside
-                    f_out.write(xh + ':' + merge_file_path + '\n')
-                    if os.path.exists(merge_file_path) == False:
-                        print 'cp file:' + merge_file_path
-                        shutil.copyfile(filePath, merge_file_path)
-                    # print os.path.isdir(filePath)
-                # shutil.copyfile(filePath,os.path.join(merge_dir_path,file))
-
-        # break
-
-def test(apk_name):
+def process_apk(apk_name):
     return_code = uncompress(PROGUARD_WORK_SPACE_WIN+apk_name,PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'/apk_uncompress')
     if int(return_code) != 0:
         #uncompress fail
@@ -70,17 +35,50 @@ def test(apk_name):
     for file in list:
         if 'classes' in file and '.dex' in file:
             class_dex_cnt = class_dex_cnt + 1
-    print class_dex_cnt
 
     if class_dex_cnt == 1:
-        single_dex(apk_name)
-        single_repack(apk_name)
+        log_info('APK_NAME:'+apk_name+'(%s)'%'single-dex')
+        print ('APK_NAME:'+apk_name+'(%s)'%'single-dex')
+        single_res = single_dex(apk_name)
+        if single_res == 1:
+            single_repack(apk_name)
     else:
-        #gd = 1
-        multi_dex(apk_name, class_dex_cnt)
-        multi_repack(apk_name, class_dex_cnt)
+        log_info('APK_NAME:'+apk_name+'(%s)'%'multi-dex')
+        print ('APK_NAME:'+apk_name+'(%s)'%'multi-dex')
+        multi_res = multi_dex(apk_name,class_dex_cnt)
+        if multi_res == 1:
+            multi_repack(apk_name,class_dex_cnt)
 
+def SLOVE():
+    list = os.listdir(PROGUARD_WORK_SPACE_WIN)
+    #print list
+    table = {}
+    f = open(PROGUARD_WORK_SPACE_WIN+'success.txt','rb')
+    while True:
+        r = f.readline()
+        if not r: break
+        r = r[:-2]
+        table[r] = 1
+
+
+    for ff in list:
+        print ff
+        if '.apk' in ff and os.path.isdir(PROGUARD_WORK_SPACE_WIN+ff) == False:
+            ff_name = ff
+            ff_name = ff_name.replace(' ','')
+            pinyin_list = lazy_pinyin(u'%s'%ff_name.decode('gbk'))
+            ss = ""
+            for i in pinyin_list:
+                ss = ss+i
+
+            os.chdir(PROGUARD_WORK_SPACE_WIN)
+            os.system('rename "%s" %s'%(ff, ss))
+            try:
+                if table[ss] == 1: continue
+            except:
+                process_apk(str(ss))
 
 if __name__ == '__main__':
-    test('com.jonathanrobins.pepe_snap.apk')
+   #process_apk('com.jonathanrobins.pepe_snap.apk')
+   SLOVE()
 

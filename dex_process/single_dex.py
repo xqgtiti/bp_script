@@ -9,20 +9,23 @@ def single_dex(apk_name):
 
     #先把解压后在文件夹apk_uncompress下的classes.dex转成jar
     return_out = dex2jar(apk_name,"")
-    if 'Exception' in return_out:
+   # if 'Exception'.upper() in return_out.upper():
+    if int(return_out) != 0:
         #dex2jar fail
         f_fail = open(PROGUARD_WORK_SPACE_WIN + 'fail_log//' + apk_name + '.txt', 'w')
         now = datetime.datetime.now()
         f_fail.write(now.strftime('%Y-%m-%d %H:%M:%S') + '\n' + apk_name + '\n' + 'Dex2jar Fail' + '\n' + return_out+ '\n')
         f_fail.close()
+        return 0
     log_info('...将原始dex转成jar ok')
     print ('...将原始dex转成jar ok')
+
     #return_out = jar2dex(apk_name,"")
     """
-    if 'Exception' in return_out:
+    if 'Exception'.upper() in return_out.upper():
         #dex到jar再到dex出错，是dex2jar工具的bug，使用enjarify尝试
         e_return_out = enjarify(apk_name,"")
-        if 'Traceback (most recent call last)' in e_return_out:
+        if 'Traceback (most recent call last)' in e_return_out.upper():
             gd = 1
     """
     #可行后，把文件删除(dex2jar没问题)
@@ -36,17 +39,19 @@ def single_dex(apk_name):
         f_fail.write(
             now.strftime('%Y-%m-%d %H:%M:%S') + '\n' + apk_name + '\n' + 'Shrink Fail' + '\n')
         f_fail.close()
+        return 0
     log_info('...使用proguard进行shrink ok')
     print ('...使用proguard进行shrink ok')
 
     #使用jar2dex把shrink后的jar包转成dex文件
     return_out = jar2dex(apk_name,'classes-dex2jar_out.jar')
-    if 'Exception' in return_out:
+    if 'Exception'.upper() in return_out.upper():
         #dex2jar fail
         f_fail = open(PROGUARD_WORK_SPACE_WIN + 'fail_log//' + apk_name + '.txt', 'w')
         now = datetime.datetime.now()
         f_fail.write(now.strftime('%Y-%m-%d %H:%M:%S') + '\n' + apk_name + '\n' + 'Jar2dex Fail' + '\n' + return_out+ '\n')
         f_fail.close()
+        return 0
     log_info('...将shrink过的jar转成dex ok')
     print ('...将shrink过的jar转成dex ok')
 
@@ -54,6 +59,8 @@ def single_dex(apk_name):
     os.system('mkdir new_dex')
     os.system('copy classes-dex2jar_out-jar2dex.dex %s'%(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'\\new_dex\\classes.dex'))
     log_info('...复制到new_dex目录 ok')
+
+    return 1
 
 
 #对apk内容进行修改，重新签名
@@ -107,19 +114,9 @@ def single_repack(apk_name):
     log_info('...对新的apk进行签名 ok')
     print ('...对新的apk进行签名 ok')
 
-"""
-    return_code = uncompress(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'/classes-dex2jar.jar',
-                             PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'/classes-dex2jar',
-                             )
-    if int(return_code) != 0:
-        # uncompress fail
-        f_fail = open(PROGUARD_WORK_SPACE_WIN + 'fail_log//' + apk_name + '.txt', 'w')
-        now = datetime.datetime.now()
-        f_fail.write(now.strftime('%Y-%m-%d %H:%M:%S') + '\n' + apk_name + '\n' + 'Uncompress jar Fail' + '\n')
-        f_fail.close()
-        return
-    """
 
+    f = open(PROGUARD_WORK_SPACE_WIN + '\\success.txt', 'a')
+    f.write(apk_name + '\n')
 
 
 
