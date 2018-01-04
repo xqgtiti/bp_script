@@ -5,7 +5,6 @@ import numpy as np
 import matplotlib
 import json
 import matplotlib.pyplot as plt
-
 def show_code():
     X = []
     Y = []
@@ -19,7 +18,7 @@ def show_code():
         r = r.strip('\r')
         res = eval(r)
         X.append(float(res['code_p']))
-        Y.append(1.0 / 62.0)
+        Y.append(1.0 / 70.0)
 
     X = sorted(X)
     print X
@@ -47,7 +46,7 @@ def show_shrink():
         r = r.strip('\r')
         res = eval(r)
         X.append(float(res['shrink_p']))
-        Y.append(1.0 / 62.0)
+        Y.append(1.0 / 70.0)
 
     X = sorted(X)
     print X
