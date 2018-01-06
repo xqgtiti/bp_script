@@ -22,6 +22,8 @@ def uncompress(file_path, save_path):
     comand_line = '7z.exe x -r -y -aos -o"%s" "%s"'%(save_path,file_path)
     print comand_line
     uncompress = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    print shlex.split(comand_line)
+
     uncompress.wait()
     error, out = uncompress.communicate()
     return uncompress.returncode

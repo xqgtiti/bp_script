@@ -62,6 +62,7 @@ def show_shrink():
     plt.plot(X, YY,marker='d',linewidth=1)
     plt.show()
 
+
 def cal():
     fsave = open('G:\PROGUARD_WORK_SPACE//cal.txt', 'w')
     f = open(PROGUARD_WORK_SPACE_WIN + 'success.txt', 'rb')

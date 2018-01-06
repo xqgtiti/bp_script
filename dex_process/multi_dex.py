@@ -2,6 +2,7 @@
 from command import *
 from proguard import *
 
+
 from global_path import *
 def test_dex2jar_usable(apk_name, xh):
     return_out = dex2jar(apk_name, xh)

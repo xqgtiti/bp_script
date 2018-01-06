@@ -154,7 +154,7 @@ def decompile_all(apk_name):
     a = 1
 
 if __name__ == '__main__':
-    install(70,90)
+    install(90,100)
     """
     f_xapk = open(TOP_100_PATH + 'xapk.txt')
     xapk_table = {}
