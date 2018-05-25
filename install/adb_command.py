@@ -14,6 +14,8 @@ def install_apk(apk_path):
     else:
         return error
 
+    
+
 if __name__ == '__main__':
 
     res = install_apk('D:\BTS Messenger_v1.1_apkpure.com.apk')

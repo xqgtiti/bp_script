@@ -36,12 +36,14 @@ def process_apk(apk_name):
         if 'classes' in file and '.dex' in file:
             class_dex_cnt = class_dex_cnt + 1
 
+    #single_dex的情况
     if class_dex_cnt == 1:
         log_info('APK_NAME:'+apk_name+'(%s)'%'single-dex')
         print ('APK_NAME:'+apk_name+'(%s)'%'single-dex')
         single_res = single_dex(apk_name)
         if single_res == 1:
             single_repack(apk_name)
+    #multi_dex的情况
     else:
         log_info('APK_NAME:'+apk_name+'(%s)'%'multi-dex')
         print ('APK_NAME:'+apk_name+'(%s)'%'multi-dex')

@@ -117,7 +117,7 @@ def show_shrink(X):
 if __name__ == '__main__':
     #cal_all()
 
-
+    """"""
     f = open('G:\PROGUARD_WORK_SPACE\TOP100_TEST//size_sta.txt','rb')
     y2 = []
     y3 = []
