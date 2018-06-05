@@ -81,6 +81,6 @@ def SLOVE():
                 process_apk(str(ss))
 
 if __name__ == '__main__':
-   #process_apk('com.jonathanrobins.pepe_snap.apk')
+
    SLOVE()
 

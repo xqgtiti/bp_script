@@ -80,17 +80,15 @@ def z7_dele(apk_name, file_name):
     return z7_dele_sub.returncode
 
 def z7_add(apk_name, file_name):
-    #新的dex目录 /new/classes*.dex
+    #new dex dictionary /new/classes*.dex
     comand_line = '7z u "%s" "%s"'%(PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//'+apk_name, PROGUARD_WORK_SPACE_WIN+'dir_'+apk_name+'//new_dex//'+file_name)
     z7_add_sub = subprocess.Popen(shlex.split(comand_line), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     z7_add_sub.wait()
     error, out = z7_add_sub.communicate()
-    #print error
-    #print out
     return z7_add_sub.returncode
 
 def jarsign(apk_name, key_name, key_pass):
-    #对apk进行签名
+    #sign to apk
     comand_line = 'jarsigner -verbose -keystore "%s" -storepass %s "%s" "%s"'\
                   %(PROGUARD_WORK_SPACE_WIN+key_name,
                     key_pass,

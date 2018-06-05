@@ -1,0 +1,5 @@
+2018-06-05 20:30:46,680 - global_path.py:35 - log - === TEST INSTALL BEGIN ===
+
+
+2018-06-05 20:30:50,927 - global_path.py:35 - log - Install success.
+

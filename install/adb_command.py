@@ -14,7 +14,6 @@ def install_apk(apk_path):
     else:
         return error
 
-    
 
 if __name__ == '__main__':
 
